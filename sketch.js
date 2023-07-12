@@ -1,4 +1,5 @@
 let r = 200;
+
 let density;
 let densitySlider;
 
@@ -15,7 +16,7 @@ function setup() {
 
   stroke(0, 0, 60);
   // strokeWeight(3);
-  strokeWeight(1);
+  strokeWeight(0.8);
   noFill();
 
   density = createDiv();
@@ -34,7 +35,7 @@ function setup() {
   frequency2Slider = createSlider(1, 10, 1, .01)
 }
 
-// let camera = 0;
+let camera = 0;
 function draw() {
   background(0, 0, 0);
   
@@ -42,13 +43,14 @@ function draw() {
   
   rotateY(90);
   rotateZ(65);
-  // camera += 1;
-  // rotateY(camera/10);
-  // rotateZ(camera/5);
+  camera += 1;
+  rotateY(camera/5);
+  rotateZ(camera/5);
 
   // normalSphere();
   // sphericaleSpiral();
-  shapeL();
+  // shapeL();
+  bumpySphere();
 
   let displayDensity = int(map(densitySlider.value(), 3, 62, 1, 60))
   density.html("Density: " + displayDensity)
@@ -57,6 +59,19 @@ function draw() {
   frequency.html("Frequency 1: " + frequencySlider.value())
   frequency2.html("Frequency 2: " + frequency2Slider.value())
 }
+
+function bumpySphere() {
+  for(let phi = 0; phi < phiMaxSlider.value(); phi += 2) {
+    beginShape(POINTS)
+    for(let theta = 0; theta < thetaMaxSlider.value(); theta += 2) {
+      let x = r * (1+0.2*sin(theta*6)*sin(phi*5)) * cos(phi)
+      let y = r * (1+0.2*sin(theta*6)*sin(phi*5)) * sin(phi) * sin(theta)
+      let z = r * (1+0.2*sin(theta*6)*sin(phi*5)) * sin(phi) * cos(theta)
+      vertex(x, y, z)
+    }
+    endShape()
+  }  
+} 
 
 function shapeL() {
   beginShape()
@@ -90,6 +105,5 @@ function normalSphere() {
       vertex(x, y, z)
     }
     endShape(CLOSE)
-  }
-  
+  }  
 } 
