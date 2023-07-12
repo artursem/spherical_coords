@@ -5,13 +5,17 @@ let densitySlider;
 let thetaMax, phiMax;
 let thetaMaxSlider, phiMaxSlider;
 
+let frequency, frequency2;
+let frequencySlider, frequencySlider2;
+
 function setup() {
   createCanvas(700, 700, WEBGL);
   angleMode(DEGREES);
   colorMode(HSB);
 
   stroke(0, 0, 60);
-  strokeWeight(3);
+  // strokeWeight(3);
+  strokeWeight(1);
   noFill();
 
   density = createDiv();
@@ -22,11 +26,17 @@ function setup() {
   
   thetaMax = createDiv();
   thetaMaxSlider = createSlider(0, 360, 360, 1)
+
+  frequency = createDiv();
+  frequencySlider = createSlider(1, 10, 1, .01)
+
+  frequency2 = createDiv();
+  frequency2Slider = createSlider(1, 10, 1, .01)
 }
 
 // let camera = 0;
 function draw() {
-  background(0, 0, 15);
+  background(0, 0, 0);
   
   orbitControl(4, 4);
   
@@ -37,12 +47,26 @@ function draw() {
   // rotateZ(camera/5);
 
   // normalSphere();
-  sphericaleSpiral();
+  // sphericaleSpiral();
+  shapeL();
 
   let displayDensity = int(map(densitySlider.value(), 3, 62, 1, 60))
   density.html("Density: " + displayDensity)
   phiMax.html("Phi: " + phiMaxSlider.value())
   thetaMax.html("Theta: " + thetaMaxSlider.value())
+  frequency.html("Frequency 1: " + frequencySlider.value())
+  frequency2.html("Frequency 2: " + frequency2Slider.value())
+}
+
+function shapeL() {
+  beginShape()
+  for(let theta = 0; theta < 360; theta += 0.1) {
+    let x = r * cos(theta * frequencySlider.value())
+    let y = r * sin(theta * frequencySlider.value()) * sin(theta * frequency2Slider.value())
+    let z = r * sin(theta * frequencySlider.value()) * cos(theta * frequency2Slider.value())
+    vertex(x, y, z)
+  }
+  endShape(LINES)
 }
 
 function sphericaleSpiral() {
