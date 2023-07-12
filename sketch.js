@@ -2,6 +2,9 @@ let r = 200;
 let density;
 let densitySlider;
 
+let thetaMax, phiMax;
+let thetaMaxSlider, phiMaxSlider;
+
 function setup() {
   createCanvas(700, 700, WEBGL);
   angleMode(DEGREES);
@@ -13,6 +16,12 @@ function setup() {
 
   density = createDiv();
   densitySlider = createSlider(3, 62, 24, 1)
+  
+  phiMax = createDiv();
+  phiMaxSlider = createSlider(0, 180, 180, 1)
+  
+  thetaMax = createDiv();
+  thetaMaxSlider = createSlider(0, 360, 360, 1)
 }
 
 function draw() {
@@ -22,9 +31,9 @@ function draw() {
   rotateY(90);
   rotateZ(65);
 
-  for(let phi = 0; phi < 180; phi += 180/densitySlider.value()) {
+  for(let phi = 0; phi < phiMaxSlider.value(); phi += 180/densitySlider.value()) {
     beginShape()
-    for(let theta = 0; theta < 360; theta += 360/densitySlider.value()) {
+    for(let theta = 0; theta < thetaMaxSlider.value(); theta += 360/densitySlider.value()) {
       let x = r * cos(phi)
       let y = r * sin(phi) * sin(theta)
       let z = r * sin(phi) * cos(theta)
@@ -35,4 +44,6 @@ function draw() {
 
   let displayDensity = int(map(densitySlider.value(), 3, 62, 1, 60))
   density.html("Density: " + displayDensity)
+  phiMax.html("Phi: " + phiMaxSlider.value())
+  thetaMax.html("Theta: " + thetaMaxSlider.value())
 }
