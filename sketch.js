@@ -10,15 +10,15 @@ let frequency, frequency2;
 let frequencySlider, frequencySlider2;
 
 function setup() {
-  createCanvas(700, 700, WEBGL);
-  // createLoop({
-  //   duration: 15, 
-  //   framesPerSecond: 60, 
-  //   gif: true,  
-  //   gifFileName: 'sperical-coords-noise-20230712.gif', 
-  //   open: true, 
-  //   download: true
-  // });
+  createCanvas(200, 200, WEBGL);
+  createLoop({
+    duration: 8, 
+    framesPerSecond: 60, 
+    gif: true,  
+    gifFileName: 'sperical-coords-noise-20230712.gif', 
+    open: true, 
+    download: true
+  });
   angleMode(DEGREES);
   colorMode(HSB);
 
